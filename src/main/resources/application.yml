@@ -1,0 +1,52 @@
+# =========================
+# Spring Boot Application 配置範本
+# =========================
+
+spring:
+  # -------------------------
+  # 服務執行設定
+  # -------------------------
+  application:
+    name: my-springboot-app
+  # Server Port
+  server:
+    port: 8080
+
+  # -------------------------
+  # Thymeleaf 設定
+  # -------------------------
+  thymeleaf:
+    enabled: true
+    cache: false           # 開發時建議關閉快取
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML             # HTML 模板模式
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+
+  # -------------------------
+  # MongoDB 設定
+  # -------------------------
+  data:
+    mongodb:
+      # 基本連線 (最簡單方式)
+      uri: mongodb://localhost:27017/mydb
+
+      # 或拆開寫法 (有帳號密碼時)
+      # host: localhost
+      # port: 27017
+      # database: mydb
+      # username: myuser
+      # password: mypassword
+
+# -------------------------
+# Logging 設定 (可選)
+# -------------------------
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    com.example: DEBUG   # 自己專案的包名
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
