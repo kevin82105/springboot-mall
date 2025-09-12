@@ -4,13 +4,13 @@ package com.example.demo.controller;
 import com.example.demo.domain.Product;
 import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sound.sampled.Port;
 import java.util.List;
 
 @RequestMapping("/product")
-@RestController
+@Controller
 public class ProductController {
 
   @Autowired
@@ -43,4 +43,8 @@ public class ProductController {
     return productService.selectByName(name);
   }
 
+  @GetMapping("/member/add")
+  public String addMemBerPage(){
+    return "addMemberPage";
+  }
 }
