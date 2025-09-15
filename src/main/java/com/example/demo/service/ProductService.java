@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -26,6 +27,13 @@ public class ProductService {
     query.addCriteria(
         Criteria.where("name").is(product.getName())
         .and("price").is(product.getPrice()));
+    mongoTemplate.remove(query, Product.class);
+  }
+
+  public void deleteProductById(String id){
+    Query query = new Query();
+    query.addCriteria(
+        Criteria.where("id").is(id));
     mongoTemplate.remove(query, Product.class);
   }
 
