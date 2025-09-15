@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>新增商品</title>
+</head>
+<body>
+<h2>新增商品</h2>
+<form th:action="@{/product/add}" th:object="${product}" method="post">
+    名稱: <input type="text" th:field="*{name}" /><br/>
+    價格: <input type="number" th:field="*{price}" step="0.01" /><br/>
+    <button type="submit">新增</button>
+</form>
+</body>
+</html>

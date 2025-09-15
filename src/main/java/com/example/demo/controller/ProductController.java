@@ -5,6 +5,7 @@ import com.example.demo.domain.Product;
 import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,9 +17,22 @@ public class ProductController {
   @Autowired
   private ProductService productService;
 
+  @GetMapping("/add")
+  public String showAddForm(Model model) {
+    model.addAttribute("product",new Product());
+    return "/product/add";
+  }
+
   @PostMapping("/add")
-  public Product createProduct(@RequestBody Product product) {
-    return productService.addProduct(product);
+  public String createProduct(@ModelAttribute Product product) {
+     productService.addProduct(product);
+     return "redirect:/product/list";
+  }
+
+  @GetMapping("/list")
+  public String listProducts(Model model) {
+    model.addAttribute("products", productService.selectAll());
+    return "product/list"; // 對應 templates/product/list.html
   }
 
   @DeleteMapping("/delete")
