@@ -6,23 +6,39 @@
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
-<h2>商品清單</h2>
-<table border="1">
+<h2 class="text-center">商品清單</h2>
+
+<form th:action="@{/product/add}" method="get" style="display:inline;">
+    <button type="submit" class="btn btn-primary">新增商品</button>
+</form>
+<table class="table">
+    <thead class="table-dark">
     <tr>
-        <th>ID</th><th>名稱</th><th>價格</th><th>操作</th>
+        <th scope="col">ID</th>
+        <th scope="col">名稱</th>
+        <th scope="col">價格</th>
+        <th scope="col">操作</th>
     </tr>
     <tr th:each="product : ${products}">
         <td th:text="${product.id}"></td>
         <td th:text="${product.name}"></td>
         <td th:text="${product.price}"></td>
         <td>
-            <a th:href="@{/product/edit/{id}(id=${product.id})}" class="btn btn-sm btn-warning">修改</a>
-            <a th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-sm btn-danger"
-               onclick="return confirm('確定要刪除嗎？');">刪除</a>
+            <!-- 修改按鈕 -->
+            <a th:href="@{/product/edit/{id}(id=${product.id})}"
+               class="btn btn-sm btn-warning">
+                修改
+            </a>
+
+            <!-- 刪除按鈕 -->
+            <a th:href="@{/product/delete/{id}(id=${product.id})}"
+               class="btn btn-sm btn-danger"
+               onclick="return confirm('確定要刪除嗎？');">
+                刪除
+            </a>
         </td>
     </tr>
 </table>
-<a th:href="@{/product/add}">新增商品</a>
 
 <!-- Toast -->
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
@@ -46,4 +62,4 @@
     });
 </script>
 </body>
-</html>z
+</html>

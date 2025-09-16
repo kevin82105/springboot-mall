@@ -1,4 +1,4 @@
-package com.example.demo.domain;
+package com.example.demo.dao;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
