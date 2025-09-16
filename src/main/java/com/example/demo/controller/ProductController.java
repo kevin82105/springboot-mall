@@ -36,6 +36,7 @@ public class ProductController {
     return "product/list"; // 對應 templates/product/list.html
   }
 
+  //沒用到
   @DeleteMapping("/delete")
   public String deleteProduct(@RequestBody Product product){
     productService.deleteProductByNameAndPrice(product);
@@ -56,9 +57,10 @@ public class ProductController {
   }
 
   @PostMapping("/update")
-  public String updateProduct(@RequestBody Product product){
+  public String updateProduct(@ModelAttribute Product product, RedirectAttributes redirectAttributes) {
     productService.updateProduct(product);
-    return "update success";
+    redirectAttributes.addFlashAttribute("successMessage", "修改成功！");
+    return "redirect:/product/list"; // 更新後回到商品清單
   }
 
   @GetMapping("/select/{name}")
@@ -66,8 +68,4 @@ public class ProductController {
     return productService.selectByName(name);
   }
 
-  @GetMapping("/member/add")
-  public String addMemBerPage(){
-    return "addMemberPage";
-  }
 }

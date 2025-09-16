@@ -41,9 +41,11 @@ public class ProductService {
   }
   public void updateProduct(Product product){
     Query query = new Query();
-    query.addCriteria(Criteria.where("name").is(product.getName()));
+    query.addCriteria(Criteria.where("id").is(product.getId()));
     Update update = new Update();
     update.set("price",product.getPrice());
+    update.set("name",product.getName());
+    update.set("category",product.getCategory());
     mongoTemplate.updateFirst(query,update,Product.class);
   }
 

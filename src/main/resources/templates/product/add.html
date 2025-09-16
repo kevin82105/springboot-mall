@@ -8,6 +8,7 @@
 <form th:action="@{/product/add}" th:object="${product}" method="post">
     名稱: <input type="text" th:field="*{name}" /><br/>
     價格: <input type="number" th:field="*{price}" step="0.01" /><br/>
+    種類: <input type="text" th:field="*{category}" /><br/>
     <button type="submit">新增</button>
 </form>
 </body>

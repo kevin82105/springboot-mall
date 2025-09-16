@@ -8,33 +8,114 @@
 <body>
 <h2 class="text-center">商品清單</h2>
 
-<form th:action="@{/product/add}" method="get" style="display:inline;">
-    <button type="submit" class="btn btn-primary">新增商品</button>
-</form>
+
+<!-- 新增商品開始 -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
+    新增商品
+</button>
+<!-- Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form th:action="@{/product/add}" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductLabel">新增商品</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="productName" class="form-label">名稱</label>
+                        <input type="text" class="form-control" id="productName" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productPrice" class="form-label">價格</label>
+                        <input type="number" class="form-control" id="productPrice" name="price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productCategory" class="form-label">種類</label>
+                        <select class="form-select" id="productCategory" name="category" required>
+                            <option value="" disabled selected>請選擇商品種類</option>
+                            <option value="生活用品">生活用品</option>
+                            <option value="食物">食物</option>
+                            <option value="電器">電器</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">新增</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 新增商品結束 -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="updateProductModal" tabindex="-1" aria-labelledby="updateProductLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form th:action="@{/product/update}" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateProductLabel">新增商品</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="productName" class="form-label">名稱</label>
+                        <input type="text" class="form-control" id="productName" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productPrice" class="form-label">價格</label>
+                        <input type="number" class="form-control" id="productPrice" name="price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productCategory" class="form-label">種類</label>
+                        <select class="form-select" id="productCategory" name="category" required>
+                            <option value="" disabled selected>請選擇商品種類</option>
+                            <option value="生活用品">生活用品</option>
+                            <option value="食物">食物</option>
+                            <option value="電器">電器</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">修改</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 修改商品結束 -->
+
 <table class="table">
     <thead class="table-dark">
     <tr>
-        <th scope="col">ID</th>
+        <th scope="col">種類</th>
         <th scope="col">名稱</th>
         <th scope="col">價格</th>
         <th scope="col">操作</th>
     </tr>
     <tr th:each="product : ${products}">
-        <td th:text="${product.id}"></td>
+        <td th:text="${product.category}"></td>
         <td th:text="${product.name}"></td>
         <td th:text="${product.price}"></td>
         <td>
             <!-- 修改按鈕 -->
-            <a th:href="@{/product/edit/{id}(id=${product.id})}"
-               class="btn btn-sm btn-warning">
-                修改
+            <button type="button"
+                    class="btn btn-sm btn-warning"
+                    data-bs-toggle="modal"
+                    data-bs-target="#updateProductModal">
+                修改商品
+            </button>
             </a>
-
             <!-- 刪除按鈕 -->
             <a th:href="@{/product/delete/{id}(id=${product.id})}"
                class="btn btn-sm btn-danger"
                onclick="return confirm('確定要刪除嗎？');">
-                刪除
+                刪除商品
             </a>
         </td>
     </tr>
