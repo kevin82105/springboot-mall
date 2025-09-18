@@ -8,7 +8,6 @@
 <body>
 <h2 class="text-center">商品清單</h2>
 
-
 <!-- 新增商品開始 -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
     新增商品
@@ -17,7 +16,7 @@
 <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form th:action="@{/product/add}" method="post"  enctype="multipart/form-data">
+            <form th:action="@{/product/add}" method="post" enctype="multipart/form-data">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addProductLabel">新增商品</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -44,10 +43,8 @@
                         <label class="form-label">商品圖片</label>
                         <input type="file" class="form-control" id="addProductImage" name="imageFile">
                     </div>
-
-                    <!-- 顯示圖片預覽 -->
-                    <img id="addProductPreview" th:if="${product.imageUrl}" th:src="@{${product.imageUrl}}"
-                         style="max-width:150px;" alt="商品圖片">
+                    <!-- 新增商品圖片預覽 -->
+                    <img id="addProductPreview" style="max-width:150px; display:none;" alt="商品圖片">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -59,14 +56,13 @@
 </div>
 <!-- 新增商品結束 -->
 
-
-<!-- Modal -->
+<!-- 修改商品 Modal -->
 <div class="modal fade" id="updateProductModal" tabindex="-1" aria-labelledby="updateProductLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form th:action="@{/product/update}" method="post"  enctype="multipart/form-data">
+            <form th:action="@{/product/update}" method="post" enctype="multipart/form-data">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="updateProductLabel">新增商品</h5>
+                    <h5 class="modal-title" id="updateProductLabel">修改商品</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <input type="hidden" id="updateProductId" name="id">
@@ -92,9 +88,8 @@
                         <label class="form-label">商品圖片</label>
                         <input type="file" class="form-control" id="updateProductImage" name="imageFile">
                     </div>
-                    <!-- 顯示圖片預覽 -->
-                    <img id="updateProductPreview" th:if="${product.imageUrl}" th:src="@{${product.imageUrl}}"
-                         style="max-width:150px;" alt="商品圖片">
+                    <!-- 修改商品圖片預覽 -->
+                    <img id="updateProductPreview" style="max-width:150px; display:none;" alt="商品圖片">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -104,8 +99,8 @@
         </div>
     </div>
 </div>
-<!-- 修改商品結束 -->
 
+<!-- 商品列表 -->
 <table class="table">
     <thead class="table-dark">
     <tr>
@@ -114,31 +109,28 @@
         <th scope="col">價格</th>
         <th scope="col">圖片</th>
         <th scope="col">操作</th>
-
     </tr>
+    </thead>
+    <tbody>
     <tr th:each="product : ${products}">
         <td th:text="${product.category}"></td>
         <td th:text="${product.name}"></td>
         <td th:text="${product.price}"></td>
         <td>
-            <img th:if="${product.imageUrl}" th:src="@{${product.imageUrl}}" style="max-width: 100px;" alt="商品圖片">
+            <img th:if="${product.imageUrl}" th:src="@{${product.imageUrl}}" style="max-width:100px;" alt="商品圖片">
         </td>
         <td>
             <!-- 修改按鈕 -->
-            <button type="button"
-                    class="btn btn-sm btn-warning"
-                    th:onclick="openUpdateModal([[${product.id}]],[[${product.name}]], [[${product.price}]],[[${product.category}]],[[${product.imageUrl}]])">
+            <button type="button" class="btn btn-sm btn-warning"
+                    th:onclick="openUpdateModal([[${product.id}]], [[${product.name}]], [[${product.price}]], [[${product.category}]], '[[${product.imageUrl}]]')">
                 修改商品
             </button>
-            </a>
             <!-- 刪除按鈕 -->
-            <a th:href="@{/product/delete/{id}(id=${product.id})}"
-               class="btn btn-sm btn-danger"
-               onclick="return confirm('確定要刪除嗎？');">
-                刪除商品
-            </a>
+            <a th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-sm btn-danger"
+               onclick="return confirm('確定要刪除嗎？');">刪除商品</a>
         </td>
     </tr>
+    </tbody>
 </table>
 
 <!-- Toast -->
@@ -162,24 +154,23 @@
         }
     });
 
+    function openUpdateModal(id, name, price, category, imageUrl) {
+        document.getElementById('updateProductId').value = id;
+        document.getElementById('updateProductName').value = name;
+        document.getElementById('updateProductPrice').value = price;
+        document.getElementById('updateProductCategory').value = category;
 
-function openUpdateModal(id, name, price, category, imageUrl) {
-    document.getElementById('updateProductId').value = id;
-    document.getElementById('updateProductName').value = name;
-    document.getElementById('updateProductPrice').value = price;
-    document.getElementById('updateProductCategory').value = category;
+        var preview = document.getElementById('updateProductPreview');
+        if (imageUrl && imageUrl !== 'null') {
+            preview.src = imageUrl;
+            preview.style.display = 'block';
+        } else {
+            preview.style.display = 'none';
+        }
 
-    var preview = document.getElementById('updateProductPreview');
-    if (imageUrl) {
-        preview.src = imageUrl;
-        preview.style.display = 'block';
-    } else {
-        preview.style.display = 'none';
+        var modal = new bootstrap.Modal(document.getElementById('updateProductModal'));
+        modal.show();
     }
-
-    var modal = new bootstrap.Modal(document.getElementById('updateProductModal'));
-    modal.show();
-}
 </script>
 </body>
 </html>
