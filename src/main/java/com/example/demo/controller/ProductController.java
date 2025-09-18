@@ -18,12 +18,6 @@ public class ProductController {
   @Autowired
   private ProductService productService;
 
-  @GetMapping("/add")
-  public String showAddForm(Model model) {
-    model.addAttribute("product",new Product());
-    return "/product/add";
-  }
-
   @PostMapping("/add")
   public String createProduct(@ModelAttribute Product product) {
      productService.addProduct(product);

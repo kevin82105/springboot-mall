@@ -17,7 +17,7 @@
 <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form th:action="@{/product/add}" method="post">
+            <form th:action="@{/product/add}" method="post"  enctype="multipart/form-data">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addProductLabel">新增商品</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -40,6 +40,10 @@
                             <option value="電器">電器</option>
                         </select>
                     </div>
+                    <div class="mb-3">
+                        <label for="productImage" class="form-label">商品圖片</label>
+                        <input type="file" class="form-control" id="productImage" name="imageFile" accept="image/*">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -56,11 +60,12 @@
 <div class="modal fade" id="updateProductModal" tabindex="-1" aria-labelledby="updateProductLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form th:action="@{/product/update}" method="post">
+            <form th:action="@{/product/update}" method="post"  enctype="multipart/form-data">
                 <div class="modal-header">
                     <h5 class="modal-title" id="updateProductLabel">新增商品</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <input type="hidden" id="updateProductId" name="id">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="updateProductName" class="form-label">名稱</label>
@@ -78,6 +83,10 @@
                             <option value="食物">食物</option>
                             <option value="電器">電器</option>
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productImage" class="form-label">商品圖片</label>
+                        <input type="file" class="form-control" id="productImage" name="imageFile" accept="image/*">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -106,8 +115,7 @@
             <!-- 修改按鈕 -->
             <button type="button"
                     class="btn btn-sm btn-warning"
-                    data-bs-toggle="modal"
-                    data-bs-target="#updateProductModal">
+                    th:onclick="openUpdateModal([[${product.id}]],[[${product.name}]], [[${product.price}]],[[${product.category}]])">
                 修改商品
             </button>
             </a>
@@ -141,6 +149,14 @@
             toast.show();
         }
     });
+
+
+    function openUpdateModal(id, name, price, category) {
+    document.getElementById('updateProductId').value = id;
+
+    var modal = new bootstrap.Modal(document.getElementById('updateProductModal'));
+    modal.show();
+}
 </script>
 </body>
 </html>

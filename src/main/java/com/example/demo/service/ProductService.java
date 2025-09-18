@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 
 import com.example.demo.dao.Product;
+import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -39,14 +40,17 @@ public class ProductService {
   public List<Product> selectAll(){
     return mongoTemplate.findAll(Product.class);
   }
-  public void updateProduct(Product product){
+  public void updateProduct(Product product) {
     Query query = new Query();
-    query.addCriteria(Criteria.where("id").is(product.getId()));
+    query.addCriteria(Criteria.where("_id").is(product.getId())); // 🔑 注意是 "_id"
+
     Update update = new Update();
-    update.set("price",product.getPrice());
-    update.set("name",product.getName());
-    update.set("category",product.getCategory());
-    mongoTemplate.updateFirst(query,update,Product.class);
+    update.set("price", product.getPrice());
+    update.set("name", product.getName());
+    update.set("category", product.getCategory());
+
+    UpdateResult result = mongoTemplate.updateFirst(query, update, Product.class);
+    System.out.println("修改筆數: " + result.getModifiedCount());
   }
 
   public Product selectByName(String name){

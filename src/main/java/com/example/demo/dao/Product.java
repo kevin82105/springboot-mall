@@ -15,7 +15,7 @@ public class Product {
   private String name;
   private BigDecimal price;
   private String category;
-
+  private String imageUrl; // 新增圖片欄位
   // 建構子
   public Product() {}
   public Product(String name, BigDecimal price, String category) {
