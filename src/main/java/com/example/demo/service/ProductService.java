@@ -48,6 +48,7 @@ public class ProductService {
     update.set("price", product.getPrice());
     update.set("name", product.getName());
     update.set("category", product.getCategory());
+    update.set("imageUrl",product.getImageUrl());
 
     UpdateResult result = mongoTemplate.updateFirst(query, update, Product.class);
     System.out.println("修改筆數: " + result.getModifiedCount());
