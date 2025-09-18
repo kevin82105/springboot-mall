@@ -18,10 +18,11 @@ public class Product {
   private String imageUrl; // 新增圖片欄位
   // 建構子
   public Product() {}
-  public Product(String name, BigDecimal price, String category) {
+  public Product(String name, BigDecimal price, String category,String imageUrl) {
     this.name = name;
     this.price = price;
     this.category = category;
+    this.imageUrl = imageUrl;
   }
 
   // getter & setter
@@ -33,4 +34,10 @@ public class Product {
   public void setPrice(BigDecimal price) { this.price = price; }
   public String getCategory() { return category; }
   public void setCategory(String category) { this.category = category; }
+  public String getImageUrl() {
+    return imageUrl;
+  }
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
+  }
 }

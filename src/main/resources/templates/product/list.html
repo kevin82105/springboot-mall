@@ -41,9 +41,13 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="productImage" class="form-label">商品圖片</label>
-                        <input type="file" class="form-control" id="productImage" name="imageFile" accept="image/*">
+                        <label class="form-label">商品圖片</label>
+                        <input type="file" class="form-control" id="addProductImage" name="imageFile">
                     </div>
+
+                    <!-- 顯示圖片預覽 -->
+                    <img id="addProductPreview" th:if="${product.imageUrl}" th:src="@{${product.imageUrl}}"
+                         style="max-width:150px;" alt="商品圖片">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -85,9 +89,12 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="productImage" class="form-label">商品圖片</label>
-                        <input type="file" class="form-control" id="productImage" name="imageFile" accept="image/*">
+                        <label class="form-label">商品圖片</label>
+                        <input type="file" class="form-control" id="updateProductImage" name="imageFile">
                     </div>
+                    <!-- 顯示圖片預覽 -->
+                    <img id="updateProductPreview" th:if="${product.imageUrl}" th:src="@{${product.imageUrl}}"
+                         style="max-width:150px;" alt="商品圖片">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
@@ -105,17 +112,22 @@
         <th scope="col">種類</th>
         <th scope="col">名稱</th>
         <th scope="col">價格</th>
+        <th scope="col">圖片</th>
         <th scope="col">操作</th>
+
     </tr>
     <tr th:each="product : ${products}">
         <td th:text="${product.category}"></td>
         <td th:text="${product.name}"></td>
         <td th:text="${product.price}"></td>
         <td>
+            <img th:if="${product.imageUrl}" th:src="@{${product.imageUrl}}" style="max-width: 100px;" alt="商品圖片">
+        </td>
+        <td>
             <!-- 修改按鈕 -->
             <button type="button"
                     class="btn btn-sm btn-warning"
-                    th:onclick="openUpdateModal([[${product.id}]],[[${product.name}]], [[${product.price}]],[[${product.category}]])">
+                    th:onclick="openUpdateModal([[${product.id}]],[[${product.name}]], [[${product.price}]],[[${product.category}]],[[${product.imageUrl}]])">
                 修改商品
             </button>
             </a>
@@ -151,8 +163,19 @@
     });
 
 
-    function openUpdateModal(id, name, price, category) {
+function openUpdateModal(id, name, price, category, imageUrl) {
     document.getElementById('updateProductId').value = id;
+    document.getElementById('updateProductName').value = name;
+    document.getElementById('updateProductPrice').value = price;
+    document.getElementById('updateProductCategory').value = category;
+
+    var preview = document.getElementById('updateProductPreview');
+    if (imageUrl) {
+        preview.src = imageUrl;
+        preview.style.display = 'block';
+    } else {
+        preview.style.display = 'none';
+    }
 
     var modal = new bootstrap.Modal(document.getElementById('updateProductModal'));
     modal.show();
