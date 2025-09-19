@@ -78,7 +78,12 @@ public class ProductController {
   public String updateProduct(@ModelAttribute Product product,
                               @RequestParam("imageFile") MultipartFile imageFile,
                               RedirectAttributes redirectAttributes) throws IOException {
+
+    // 先取得原本商品
+    Product existingProduct = productService.getById(product.getId());
+
     if (!imageFile.isEmpty()) {
+      // 上傳新圖片
       String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
       Path uploadPath = Paths.get("uploads/images");
       if (!Files.exists(uploadPath)) {
@@ -88,6 +93,9 @@ public class ProductController {
       Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
       product.setImageUrl("/uploads/images/" + fileName);
+    } else {
+      // 沒有上傳新圖片，保留原本圖片 URL
+      product.setImageUrl(existingProduct.getImageUrl());
     }
 
     productService.updateProduct(product);
@@ -99,7 +107,7 @@ public class ProductController {
 
   @GetMapping("/select/{name}")
   public Product updateProduct(@PathVariable String name){
-    return productService.selectByName(name);
+    return productService.getByName(name);
   }
 
 }

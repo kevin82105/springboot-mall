@@ -54,9 +54,15 @@ public class ProductService {
     System.out.println("修改筆數: " + result.getModifiedCount());
   }
 
-  public Product selectByName(String name){
+  public Product getByName(String name){
     Query query = new Query();
     query.addCriteria(Criteria.where("name").is(name));
+    return mongoTemplate.findOne(query,Product.class);
+  }
+
+  public Product getById(String id){
+    Query query = new Query();
+    query.addCriteria(Criteria.where("id").is(id));
     return mongoTemplate.findOne(query,Product.class);
   }
 }
