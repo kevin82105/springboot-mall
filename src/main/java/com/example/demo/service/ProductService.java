@@ -42,7 +42,7 @@ public class ProductService {
   }
   public void updateProduct(Product product) {
     Query query = new Query();
-    query.addCriteria(Criteria.where("_id").is(product.getId())); // 🔑 注意是 "_id"
+    query.addCriteria(Criteria.where("_id").is(product.getId()));
 
     Update update = new Update();
     update.set("price", product.getPrice());

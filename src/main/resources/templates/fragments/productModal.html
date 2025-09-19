@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+
+<!-- 新增商品Modal -->
+<div th:fragment="addProductModal" class="modal fade" id="addProductModal" tabindex="-1"
+     aria-labelledby="addProductLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form th:action="@{/product/add}" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductLabel">新增商品</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="addProductName" class="form-label">名稱</label>
+                        <input type="text" class="form-control" id="addProductName" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="addProductPrice" class="form-label">價格</label>
+                        <input type="number" class="form-control" id="addProductPrice" name="price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="addProductCategory" class="form-label">種類</label>
+                        <select class="form-select" id="addProductCategory" name="category" required>
+                            <option value="" disabled selected>請選擇商品種類</option>
+                            <option value="生活用品">生活用品</option>
+                            <option value="食物">食物</option>
+                            <option value="電器">電器</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">商品圖片</label>
+                        <input type="file" class="form-control" id="addProductImage" name="imageFile">
+                    </div>
+                    <!-- 新增商品圖片預覽 -->
+                    <img id="addProductPreview" style="max-width:150px; display:none;" alt="商品圖片">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">新增</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 新增商品結束 -->
+
+<!-- 修改商品 Modal -->
+<div th:fragment="updateProductModal" class="modal fade" id="updateProductModal" tabindex="-1"
+     aria-labelledby="updateProductLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form th:action="@{/product/update}" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateProductLabel">修改商品</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <input type="hidden" id="updateProductId" name="id">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="updateProductName" class="form-label">名稱</label>
+                        <input type="text" class="form-control" id="updateProductName" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateProductPrice" class="form-label">價格</label>
+                        <input type="number" class="form-control" id="updateProductPrice" name="price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateProductCategory" class="form-label">種類</label>
+                        <select class="form-select" id="updateProductCategory" name="category" required>
+                            <option value="" disabled selected>請選擇商品種類</option>
+                            <option value="生活用品">生活用品</option>
+                            <option value="食物">食物</option>
+                            <option value="電器">電器</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">商品圖片</label>
+                        <input type="file" class="form-control" id="updateProductImage" name="imageFile">
+                    </div>
+                    <!-- 修改商品圖片預覽 -->
+                    <img id="updateProductPreview" style="max-width:150px; display:none;" alt="商品圖片">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">修改</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 修改商品結束 -->
